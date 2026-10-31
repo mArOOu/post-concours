@@ -5,13 +5,17 @@ import { z } from "zod";
 
 const responseSchema = z.object({
   answers: z.record(z.string(), z.number().int()),
+  privacyAccepted: z.literal(true),
 });
 
 export async function POST(request: Request) {
   try {
     const parsed = responseSchema.safeParse(await request.json());
     if (!parsed.success) {
-      return NextResponse.json({ error: "Answers must be integer values." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Answers must be integer values and privacy acknowledgement is required." },
+        { status: 400 },
+      );
     }
 
     const questions = await listQuestions();

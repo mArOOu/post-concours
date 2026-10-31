@@ -19,6 +19,7 @@ export default function QuestionnairePage() {
   const [error, setError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -47,7 +48,7 @@ export default function QuestionnairePage() {
       const res = await fetch("/api/responses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers }),
+        body: JSON.stringify({ answers, privacyAccepted }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to submit");
@@ -132,17 +133,37 @@ export default function QuestionnairePage() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <label className="flex items-start gap-3 text-sm leading-6 text-muted sm:order-1 sm:max-w-xl">
+            <input
+              type="checkbox"
+              checked={privacyAccepted}
+              onChange={(event) => setPrivacyAccepted(event.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 rounded border-border bg-white"
+            />
+            <span>
+              I have read and understand the{" "}
+              <Link
+                href="/privacy"
+                className="font-semibold text-accent underline"
+              >
+                privacy notice
+              </Link>
+              . My answers will be stored to calculate my results.
+            </span>
+          </label>
           <button
             onClick={handleSubmit}
-            disabled={submitting || answeredCount === 0}
+            disabled={submitting || answeredCount === 0 || !privacyAccepted}
             className="ui-button ui-button-primary"
           >
             {submitting
               ? "Saving..."
               : answeredCount === 0
                 ? "Answer at least one question"
-                : "See my results"}
+                : !privacyAccepted
+                  ? "Accept the privacy notice"
+                  : "See my results"}
           </button>
           {answeredCount > 0 && (
             <button

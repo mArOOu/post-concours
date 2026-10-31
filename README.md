@@ -1,6 +1,8 @@
-# Residency Specialty
+# post-concours
 
-Residency Specialty is a Next.js application for exploring medical
+> Working project codename. The final product name is still to be decided.
+
+post-concours is a Next.js application for exploring medical
 specialties and matching a candidate's preferences to specialty profiles.
 It includes:
 
@@ -107,7 +109,8 @@ Vercel deployment procedure are in
 - Use a separate Firebase project for staging and production.
 - Configure Firestore backups and billing alerts before launch.
 - Add rate limiting or bot protection to public response submission.
-- Publish a privacy notice and define response retention/deletion.
+- Keep the in-app [privacy notice](app/privacy/page.tsx) accurate and enforce
+  its 90-day response retention/deletion policy in the production backend.
 
 ## Current scope and known limitations
 

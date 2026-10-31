@@ -62,6 +62,9 @@ export default async function Home() {
             <Link href="#why-it-matters" className="nav-link">
               Why it matters
             </Link>
+            <Link href="/privacy" className="nav-link">
+              Privacy
+            </Link>
           </nav>
         </header>
 

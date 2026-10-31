@@ -145,7 +145,10 @@ Firestore documents, GitHub Actions logs, or the repository.
 ## 9. Before public launch
 
 - Replace demo specialties/questions with reviewed local residency data.
-- Add a privacy notice and define response retention/deletion.
+- Enforce the 90-day response retention/deletion policy described in the
+  [privacy notice](../app/privacy/page.tsx), for example with a scheduled
+  Firebase cleanup job. The public questionnaire requires acknowledgement
+  before saving answers.
 - Add rate limiting or bot protection to `POST /api/responses`.
 - Configure Firebase backups and billing alerts.
 - Create a separate Firebase project for staging.
